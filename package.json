@@ -1,0 +1,33 @@
+{
+    "name": "project",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "create:env": "node -r fs -e \"fs.copyFileSync('./env/.env.dev', '.env', fs.constants.COPYFILE_EXCL)\"",
+        "start": "npx tsc && node dist/index.js",
+        "webhook:subscribe": "npx tsc && node dist/webhook/subscription.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint src/**/*.ts",
+        "lint:fix": "eslint src/**/*.ts --fix",
+        "format:check": "prettier --check .",
+        "format": "prettier . --write"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@eslint/js": "^9.13.0",
+        "@types/eslint__js": "^8.42.3",
+        "@types/node": "^22.8.0",
+        "eslint": "^9.13.0",
+        "node-fetch": "^2.7.0",
+        "typescript": "^5.6.3",
+        "typescript-eslint": "^8.12.0"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "prettier": "3.3.3",
+        "ts-node": "^10.9.2"
+    }
+}

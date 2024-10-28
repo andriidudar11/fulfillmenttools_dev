@@ -1,0 +1,15 @@
+node_modules/
+build/
+coverage/
+dist/
+
+*.log
+
+./idea
+
+.DS_Store
+
+.env
+
+
+.auth
