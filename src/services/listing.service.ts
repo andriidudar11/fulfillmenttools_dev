@@ -43,4 +43,14 @@ export class ListingService {
         const res = await HttpService.delete(url);
         return res;
     }
+
+    public static getDefaultEntity(tenantArticleId: string): Listing {
+        return {
+            imageUrl:
+                'https://upload.wikimedia.org/wikipedia/en/3/35/Wonka_Bar%2C_packaging.jpg',
+            price: 3.99,
+            tenantArticleId,
+            title: 'Wonkas Chocolate Bar',
+        };
+    }
 }

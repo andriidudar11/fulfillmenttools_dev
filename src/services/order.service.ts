@@ -5,13 +5,17 @@ import { HttpService } from './http.service';
 export class OrderService {
     @requireAuth()
     public static async createOrder(
-        tenantArticleId: string,
-        tenantOrderId: string,
-        facilityId: string
+        order: Order
     ) {
         const url = HttpService.buildUrl('api/orders');
 
-        const order: Order = {
+        const res = await HttpService.post(url, JSON.stringify(order));
+
+        return res.json();
+    }
+
+    public static getDefaultEntity(facilityId: string, tenantArticleId: string, tenantOrderId: string): Order {
+        return {
             consumer: {
                 addresses: [
                     {
@@ -47,9 +51,5 @@ export class OrderService {
             ],
             tenantOrderId,
         };
-
-        const res = await HttpService.post(url, JSON.stringify(order));
-
-        return res.json();
     }
 }

@@ -3,10 +3,16 @@ import { HttpService } from './http.service';
 
 export class HandoverService {
     @requireAuth()
-    public static async handover(handoverJobId: string, version: number) {
+    public static async handover(handoverJobId: string, body: any) { // TODO fix any
         const url = HttpService.buildUrl(`api/handoverjobs/${handoverJobId}`);
 
-        const body = {
+        const res = await HttpService.patch(url, JSON.stringify(body));
+
+        return res.json();
+    }
+
+    public static getDefaultHandoverEntity(version: number) {
+        return {
             actions: [
                 {
                     action: 'ModifyHandoverjob',
@@ -15,9 +21,5 @@ export class HandoverService {
             ],
             version,
         };
-
-        const res = await HttpService.patch(url, JSON.stringify(body));
-
-        return res.json();
     }
 }

@@ -1,17 +1,31 @@
 import { requireAuth } from '../decorators';
+import { EventBody } from '../dto';
 import { HttpService } from './http.service';
 
 export class PickService {
     @requireAuth()
     public static async pick(
         pickJobId: string,
-        stockId: string,
-        itemId: string,
-        version: number
+        body: EventBody
     ) {
         const url = HttpService.buildUrl(`api/pickjobs/${pickJobId}`);
 
-        const body = {
+        const res = await HttpService.patch(url, JSON.stringify(body));
+
+        return res.json();
+    }
+
+    @requireAuth()
+    public static async closePickJob(pickJobId: string, body: EventBody) {
+        const url = HttpService.buildUrl(`api/pickjobs/${pickJobId}`);
+
+        const res = await HttpService.patch(url, JSON.stringify(body));
+
+        return res.json();
+    }
+
+    public static getDefaultPickEntity(stockId: string, itemId: string, version: number): EventBody {
+        return {
             version,
             actions: [
                 {
@@ -32,17 +46,10 @@ export class PickService {
                 },
             ],
         };
-
-        const res = await HttpService.patch(url, JSON.stringify(body));
-
-        return res.json();
     }
 
-    @requireAuth()
-    public static async closePickJob(pickJobId: string, version: number) {
-        const url = HttpService.buildUrl(`api/pickjobs/${pickJobId}`);
-
-        const body = {
+    public static getDefaultClosePickEntity(version: number): EventBody {
+        return {
             version,
             actions: [
                 {
@@ -51,9 +58,5 @@ export class PickService {
                 },
             ],
         };
-
-        const res = await HttpService.patch(url, JSON.stringify(body));
-
-        return res.json();
     }
 }

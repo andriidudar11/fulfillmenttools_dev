@@ -7,34 +7,12 @@ import { HttpService } from './http.service';
 export class FacilityService {
     @requireAuth()
     public static async createFacility(
-        tenantFacilityId: string
+        tenantFacilityId: string,
+        facility: FacilityBody,
     ): Promise<FacilityCreatedResponse> {
         const url = HttpService.buildUrl('api/facilities');
 
-        const body: FacilityBody = {
-            name: 'Andriis Pickup Shop',
-            address: {
-                companyName: 'Andriis Shop Ltd.',
-                country: 'DE',
-                postalCode: '12345',
-                city: 'M\xFCnchen',
-                street: 'Lilienstr.',
-                houseNumber: '57',
-            },
-            services: [
-                // {
-                //   type: 'SHIP_FROM_STORE'
-                // },
-                {
-                    type: 'PICKUP',
-                },
-            ],
-            tenantFacilityId,
-            status: 'ONLINE',
-            locationType: LocationType.STORE,
-        };
-
-        const res = await HttpService.post(url, JSON.stringify(body));
+        const res = await HttpService.post(url, JSON.stringify(facility));
 
         return <Promise<FacilityCreatedResponse>>res.json();
     }
@@ -71,5 +49,30 @@ export class FacilityService {
         const res = await HttpService.delete(url);
 
         return res;
+    }
+
+    public static getDefaultEntity(tenantFacilityId: string): FacilityBody {
+        return {
+            name: 'Andriis Pickup Shop',
+            address: {
+                companyName: 'Andriis Shop Ltd.',
+                country: 'DE',
+                postalCode: '12345',
+                city: 'M\xFCnchen',
+                street: 'Lilienstr.',
+                houseNumber: '57',
+            },
+            services: [
+                // {
+                //   type: 'SHIP_FROM_STORE'
+                // },
+                {
+                    type: 'PICKUP',
+                },
+            ],
+            tenantFacilityId,
+            status: 'ONLINE',
+            locationType: LocationType.STORE,
+        };
     }
 }

@@ -7,3 +7,5 @@ export * from './listing.dto';
 export * from './order.dto';
 export * from './facility-update.dto';
 export * from './tokens.dto';
+export * from './stock.dto';
+export * from './event.dto';

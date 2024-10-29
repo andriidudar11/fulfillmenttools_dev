@@ -11,101 +11,71 @@ import { StockService } from './stock.service';
 
 const tenantArticleId = '1234';
 const tenantFacilityId = 'K12347';
-const tenantOrderId = 'R456728553';
+const tenantOrderId = 'R456728554';
 
 export class ClientService {
     public static async main() {
         /**
          * Facility creation
          */
-        // const facility = await FacilityService.createFacility(tenantFacilityId);
+        // const facility = await FacilityService.createFacility(tenantFacilityId, FacilityService.getDefaultEntity(tenantFacilityId));
         // const { id: facilityId } = facility;
-        const facilityId = 'a0a7c407-df0f-4721-a19e-3c495047482b';
-
-        console.log('facility');
-        // console.log(facility);
-        console.log(facilityId);
-
-        const listing: Listing = {
-            imageUrl:
-                'https://upload.wikimedia.org/wikipedia/en/3/35/Wonka_Bar%2C_packaging.jpg',
-            price: 3.99,
-            tenantArticleId: tenantArticleId,
-            title: 'Wonkas Chocolate Bar',
-        };
+        const facilityId = 'a0a7c407-df0f-4721-a19e-3c495047482b'; // Andriis Pickup Shop
 
         /**
          * Listing creation
          */
-        // const listingResponse = await ListingService.createListings(facilityId, [listing]);
-        // console.log('listingResponse: ');
+        // const listingResponse = await ListingService.createListings(facilityId, [ListingService.getDefaultEntity(tenantArticleId)]);
+        // console.log('listingResponse');
         // console.log(listingResponse);
 
-        const allListings = await ListingService.getAllListings(facilityId);
-        console.log('allListings ');
-        console.log(allListings);
+        // const allListings = await ListingService.getAllListings(facilityId);
+        // console.log('allListings ');
+        // console.log(allListings);
 
         /**
-         * Stocks creation
+         * Stock creation
          */
-        // const stock = await StockService.createStock(facilityId, tenantArticleId, 1000);
+        // const stock = await StockService.createStock(StockService.getDefaultEntity(facilityId, tenantArticleId, 1000));
         const stockId = '0aa7c543-a817-40b4-80b4-2eda96b260d8';
-        // const itemId = 'a543e9b9-ec7b-4c83-b82e-99f845a9b3f6';
-        const itemId = '8babea0b-7195-47fa-9bbb-cea8e6527991';
-        // // console.log('stock');
-        // // console.log(stock);
+        const itemId = '4eca5a1a-a8ed-4388-a6d5-354d82d66f7c';
 
-        const stocks = await StockService.getStocks(facilityId);
-
-        console.log('stocks');
-        console.log(stocks);
-
-        // const order = await OrderService.createOrder(tenantArticleId, tenantOrderId, facilityId);
+        /**
+         * Order creation
+         */
+        // const order = await OrderService.createOrder(OrderService.getDefaultEntity(facilityId, tenantArticleId, tenantOrderId));
         // console.log(JSON.stringify(order));
 
-        // /**
-        //  * Picking
-        //  */
-        const pickJobId = 'cead8c7d-1f79-450a-8606-d2708c36b76e';
-        // const picked = await PickService.pick(pickJobId, stockId, itemId, 2);
-
+        /**
+         * Picking
+         */
+        // const pickJobId = '0fe7b938-e74e-45bf-a1fc-febc0e3f6882';
+        // const picked = await PickService.pick(pickJobId, PickService.getDefaultPickEntity(stockId, itemId, 1));
         // console.log('picked');
         // console.log(picked);
 
-        // const closedPickJob = await PickService.closePickJob(pickJobId, 4);
-
+        // const closedPickJob = await PickService.closePickJob(pickJobId, PickService.getDefaultClosePickEntity(3));
         // console.log('closedPickJob');
         // console.log(closedPickJob);
 
-        // /**
-        //  * Packing
-        //  */
+        /**
+         * Packing
+         */
+        // const packJobId = '4ff729cc-ad84-4960-beed-30d54cc8b93d';
+        // const packed = await PackService.pack(packJobId, PackService.getDefaultPackEntity(itemId, 1, 1));
+        // console.log('packed');
+        // console.log(packed);
 
-        const packJobId = 'a06eb550-57d1-4a30-a746-2d795f8a758e';
-        const packed = await PackService.pack(packJobId, stockId, itemId, 1, 1);
-        console.log('packed');
-        console.log(packed);
+        // const closedPackJob = await PackService.closePackJob(packJobId, PackService.getDefaultClosePackEntity(2));
+        // console.log('closedPackJob');
+        // console.log(closedPackJob);
 
-        const closedPackJob = await PackService.closePackJob(packJobId, 2);
-
-        console.log('closedPackJob');
-        console.log(closedPackJob);
-
-        // /**
-        //  * Handing over
-        //  */
-        const handoverJobId = '';
-        const handed = HandoverService.handover(handoverJobId, 1);
-
-        console.log('handed');
-        console.log(handed);
-
-        // const resAuth: AuthRefreshResponse | null = await AuthService.refreshAuthentication(res.refreshToken);
-
-        // console.log('resAuth:');
-        // console.log(resAuth);
-
-        // const res = await FacilityService.updateFacility('aefd479f-3fb1-4e85-ac6e-240054eb7224', 5);
-        // console.log(res);
+        /**
+         * Handing over
+         */
+        // const handoverJobId = '07968bdd-7997-4d99-b17b-57d7a730e572';
+        // const handed = await HandoverService.handover(handoverJobId, HandoverService.getDefaultHandoverEntity(1));
+        // console.log('handed');
+        // console.log(handed);
     }
 }
